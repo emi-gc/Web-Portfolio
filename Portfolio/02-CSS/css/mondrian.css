@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin-left: 20px;
+}
+
+.painting {
+    width: 600px;
+    height: 600px;
+    margin: 20px;
+    border: 10px solid black;
+    position: relative;
+}
+
+.box {
+    position: absolute;
+    box-sizing: border-box;
+    border: 5px solid black;
+}
+
+.red {
+    width: 400px;
+    height: 400px;
+    background-color: red;
+}
+
+.white-top {
+    width: 200px;
+    height: 250px;
+    left: 400px;
+    background-color: white;
+}
+
+.blue {
+    width: 200px;
+    height: 350px;
+    top: 250px;
+    left: 400px;
+    background-color: blue;
+}
+
+.white-middle {
+    width: 250px;
+    height: 200px;
+    top: 400px;
+    background-color: white;
+}
+
+.yellow {
+    width: 150px;
+    height: 100px;
+    top: 400px;
+    left: 250px;
+    background-color: yellow;
+}
+
+.white-bottom {
+    width: 150px;
+    height: 100px;
+    top: 500px;
+    left: 250px;
+    background-color: white;
+}
