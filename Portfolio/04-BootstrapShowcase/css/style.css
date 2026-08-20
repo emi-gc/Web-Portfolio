@@ -1,0 +1,10 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.target-slide {
+    height: 300px;
+    padding: 80px 50px;
+    text-align: center;
+}
