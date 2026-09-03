@@ -6,22 +6,31 @@
 var memo = {};
 function fibonacci() {
   "use strict";
+
   var n = document.getElementById("num").value;
   var val = f(n);
-  return val;
+
+  document.getElementById("fibonacciLbl").textContent = val; // Added it directly on the HTML website
+  console.log(val); // for good measure also
 }
 
 function f(n) {
+  n = Number(n);
   var value;
   // Check if the memory array already contains the requested number
   if (memo.hasOwnProperty(n)) {
     value = memo[n];
   } else {
-    //TODO: Implement the fibonacci function here!
+    // Fibonacci recursive algorithm
+    if (n < 2) {
+      value = n;
+    }
+    else {
+      value = f(n-1) + f(n-2);
+    }
 
     memo[n] = value;
   }
+    return value;
 
-  return value;
 }
-console.log(fibonacci(15));

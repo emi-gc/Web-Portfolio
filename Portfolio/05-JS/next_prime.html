@@ -17,8 +17,13 @@
             var maxNum = parseInt(1299827);
             if (number < maxNum && !isNaN(number)) {
                 for (var i = number + 1; i < maxNum; i++) {
-                    //TODO: check if the current number is a prime or not
-                    // If it is, then return it
+                    // Check whether the current number is prime.
+                    if (isPrime(i)) {
+                        // Put the next prime number back into the input field.
+                        id.value = i;
+                        // Stop searching after the first prime is found.
+                        return;
+                    }
                     continue;
                 }
             } else {
@@ -31,6 +36,10 @@
                 if (num % i === 0) {
                     return false;
                 }
+            }
+            // Numbers below 2, including negative numbers, are not prime.
+            if (num < 2) {
+                return false;
             }
             return true;
         }

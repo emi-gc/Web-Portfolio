@@ -19,12 +19,19 @@ var getPrimeFactors = function (n) {
 
   var i,
     sequence = [];
+  for (i = 2; i <= n; i++){ // checks from 2 to number
+    if (n % i === 0 && isPrime(i)) { // if i is a prime factor
+      sequence.push(i); // add to sequence array
 
-  //TODO: Check which numbers are factors of n and also check if
-  // that number also happens to be a prime
-
+    }
+  }  
   return sequence;
 };
+function displayPrimeFactors() {
+  "use strict";
 
-// the prime factors for this number are: [ 2, 3, 5, 7, 11, 13 ]
-console.log(getPrimeFactors(30030));
+  var n = Number(document.getElementById("num").value); // Convert input in num to Number to variable n
+  var factors = getPrimeFactors(n); // Gets prime factors
+
+  document.getElementById("pf").textContent = factors.join(", "); // Displays factors separated by a comma on ID pf
+}
