@@ -15,11 +15,21 @@ const createActionCard = (text, priority) => {
     const li = document.createElement('li');
     
     // 2b. Add basic utility classes: 'list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'impact-card'
-    li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center', 'impact-card');
+    li.classList.add(
+        'list-group-item', 
+        'd-flex', 
+        'justify-content-between', 
+        'align-items-center', 
+        'impact-card');
 
     // 2c. Add appropriate priority class ('priority-high', 'priority-medium', 'priority-low')
     
     li.classList.add(`priority-${priority}`);
+
+    let badgeColor = "bg-secondary";
+    if (priority === "high") badgeColor = "bg-danger";
+    if (priority === "medium") badgeColor = "bg-warning text-dark";
+    if (priority === "low") badgeColor = "bg-success";
 
     // 2d. Construct interior HTML with text nodes, priority badges, action button icons
     // Make sure the action buttons have explicit data-action tags:
@@ -30,7 +40,7 @@ const createActionCard = (text, priority) => {
     li.innerHTML = `
         <div class="d-flex align-items-center">
             <span class="card-title fw-semibold">${text}</span>
-            <span class="badge ms-2 bg-secondary text-capitalize">${priority}</span>
+            <span class="badge ms-2 ${badgeColor} text-capitalize">${priority}</span>
         </div>
         <div class="btn-group btn-group-sm">
             <button class="btn btn-outline-success" data-action="toggle">✓</button>
@@ -48,8 +58,9 @@ const createActionCard = (text, priority) => {
 // ==========================================
 const updateCounter = () => {
     // Calculate total children nodes inside actionList and update cardCounter display.
-    const total = actionList.children.length;
-    cardCounter.textContent = `Total: ${total} Items`;
+    const totalElements = actionList.children.length;
+    const completedElements = actionList.querySelectorAll('.impact-card.completed').length;
+    cardCounter.textContent = `Total: ${totalElements - completedElements} Open Items`;
 };
 
 // ==========================================
@@ -65,7 +76,8 @@ actionForm.addEventListener('submit', (e) => {
     if (!text) return;
     const newCard = createActionCard(text, priority);
     actionList.appendChild(newCard);
-    actionForm.reset();
+    actionInput.value = "";
+    prioritySelect.value = "medium";
     updateCounter();
 });
 
@@ -89,8 +101,13 @@ actionList.addEventListener('click', (e) => {
     } 
     else if (action === 'delete') {
         // Fade out/remove currentCard from DOM, update totals
-        currentCard.remove();
-        updateCounter();
+        currentCard.style.transition = "all 0.3s ease";
+        currentCard.style.opacity = "0";
+        currentCard.style.transform = "scale(0.9)";
+        setTimeout(() => {
+            currentCard.remove();     
+            updateCounter();
+        }, 300);
     } 
     else if (action === 'up') {
         // Find sibling element directly above currentCard
@@ -103,9 +120,9 @@ actionList.addEventListener('click', (e) => {
     else if (action === 'down') {
         // Find sibling element directly below currentCard
         // If it exists, use sibling.nextElementSibling to swap or insertBefore
-        const nextCard = currentCard.nextElementSibling;
-        if (nextCard) {
-            actionList.insertBefore(nextCard, currentCard);
+        const nextSibling= currentCard.nextElementSibling;
+        if (nextSibling) {
+            actionList.insertBefore(nextCard, nextSibling.nextElementSibling);
         }
     }
 });
