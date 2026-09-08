@@ -1,11 +1,17 @@
 // ==========================================
 // 1. SELECTORS & CORE STATE
+
+const { act, createContext } = require("react");
+
 // ==========================================
 const actionForm = document.getElementById('action-form');
 const actionInput = document.getElementById('action-input');
 const prioritySelect = document.getElementById('priority-select');
 const actionList = document.getElementById('action-list');
 const cardCounter = document.getElementById('card-counter');
+const saveBtn = document.getElementById('save-btn');
+const loadBtn = document.getElementById('load-btn');
+const fileInput = document.getElementById('file-input');
 
 // ==========================================
 // 2. TODO: PROGRAMMATIC NODE CREATION
@@ -125,4 +131,81 @@ actionList.addEventListener('click', (e) => {
             actionList.insertBefore(nextCard, nextSibling.nextElementSibling);
         }
     }
+}
+);
+
+// ==========================================
+// 6. LOCAL FILE EXPORT ENGINE 
+// ==========================================
+saveBtn.addEventListener('click', () => {
+    // 1. Target all dynamically spawned list item nodes inside the DOM
+    const actionCards = actionList.querySelectorAll('li');
+    const exportData = [];
+
+    // 2. Loop through active elements and scrape current UI state into an array
+    actionCards.forEach((card) => {
+        const titleElement = card.querySelector('.card-title');
+        const priorityElement = card.querySelector('.badge');
+        const isCompleted = card.classList.contains('.completed');
+
+    });
+    // 3. Defensive Check: Prevent exporting blank structures
+
+    // 4. Serialize the JavaScript Array to formatted JSON text (from our JSON standards)
+
+    // 5. Create a static Blob (Binary Large Object) containing our raw string payload
+
+    // 6. Generate an ephemeral, localized URL string pointing to our Blob in memory
+
+    // 7. Spawn a hidden anchor element to act as a programmatic trigger
+    // Format filename dynamically with the current ISO calendar date
+
+    // 8. Mount, programmatically click, and immediately unmount the anchor link
+
+    // 9. Clean up memory pointers by revoking the Object URL slightly after completion
+});
+
+// ==========================================
+// 7. IMPORT WORKFLOW (LOAD JSON VIA FILEREADER)
+// ==========================================
+
+// Click load button to programmatically trigger hidden local system explorer
+loadBtn.addEventListener('click', () => {
+    
+});
+
+// Handle local file selection event
+fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (!file) return; // Action cancelled by user
+
+    // Instantiate native Web API FileReader stream
+    const reader = new FileReader();
+
+    // Define asynchronous execution callback once the file stream buffer finishes reading
+    reader.onload = function(e) {
+        try {    
+            // Parse raw text into structured JSON array
+
+            // Defensive Validation: Is this actually a valid array?
+
+            // Prompt verification to avoid accidentally overriding current work
+
+            // Clear current DOM items
+
+            // Loop and programmatically spawn new cards
+
+            // Update real-time statistics counters
+
+        } catch (error) {
+            console.error("Reader processing crashed:", error);
+            alert(`❌ File Parsing Failed: ${error.message}`);
+        } finally {
+            // Flush file input selection so the user can re-upload the same file on demand
+            fileInput.value = '';
+        }
+    };
+
+    // Trigger the file read stream as text encoding
+    reader.readAsText(file);
 });
