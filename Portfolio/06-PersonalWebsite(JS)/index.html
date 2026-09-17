@@ -1,12 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Website - CSS</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jose Emiliano Gomez Cortes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/server.js" defer></script> <!-- Added defer because it wouldn't run correctly otherwise -->
 </head>
 <body>
-  
+    <div class="section hero">
+        <img class="cloud cloud-left" src="images/cloud.png" alt="">
+        <img class="cloud cloud-right" src="images/cloud.png" alt="">
+    <table>
+        <tr>
+            <td>
+                <img class="emi-photo" src="images/emi2.png" alt="Jose Emiliano Gomez Cortes">
+            </td>
+            <td>
+                <h1>Jose Emiliano Gomez Cortes</h1>
+                <p><strong>Job:</strong> Student</p>
+                <p><strong>Address:</strong> Zapopan, Jalisco, Mexico</p>
+                <p>
+                    I am Emiliano, I am a student at Universidad Panamericana, I want to be a
+                    software engineer or a videogame developer, but more than my job, I want to be remembered as a kind, funny
+                    person who always tries to do the right thing.
+                </p>
+                <blockquote>
+                    <p><em><strong>“People are riddles. They want someone else to solve their riddle. They live life wanting someone to solve the riddle that they are, the most difficult riddle in the world.”</strong></em></p>
+                </blockquote>
+            </td>
+        </tr>
+    </table>
+        <img class="mountain" src="images/mountain.png" alt="Mountain">
+    </div>
+
+    <hr>
+
+    <div class="section alternate">
+
+    <h2>Background</h2>
+    <p>I am a computer science student. My professional goal is to create useful and ethical software or a videogame one day. </p>
+
+    <h3>Education</h3>
+    <ul class="education-list">
+        <li>
+            <a href="https://www.tanesque.com.mx" target="_blank">
+                <img class="logo" src="images/tanesque.png" alt="Tanesque logo">
+            </a>
+            <span class="school-details"><em>2013-2022</em> - <strong><a href="https://www.tanesque.com.mx" target="_blank">Tanesque</a></strong></span>
+        </li>
+        <li>
+            <a href="https://www.cervantes.edu.mx" target="_blank">
+                <img class="logo" src="images/cervantes.png" alt="Colegio Cervantes Costa Rica logo">
+            </a>
+            <span class="school-details"><em>2022-2025</em> - <strong><a href="https://www.cervantes.edu.mx" target="_blank">Colegio Cervantes Costa Rica</a></strong></span>
+        </li>
+        <li>
+            <a href="https://www.up.edu.mx/campus-guadalajara/" target="_blank">
+                <img class="logo" src="images/up-bonaterra-facultad-de-derecho-logo.png" alt="Universidad Panamericana logo">
+            </a>
+            <span class="school-details"><em>2025-Present</em> - <strong><a href="https://www.up.edu.mx/campus-guadalajara/" target="_blank">Universidad Panamericana</a></strong></span>
+        </li>
+    </ul>
+
+    <h3>Skills</h3>
+    <ol>
+        <li>C++ - 40%</li>
+        <li>Java - 35%</li>
+        <li>HTML - 30%</li>
+        <li>Python - 20%</li>
+        <li>Git - 30%</li>
+    </ol>
+
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <h2>Hobbies</h2>
+        <ul>
+            <li>Piano</li>
+            <li>Video Games</li>
+            <li>Music</li>
+            <li>Reading</li>
+            <li>Traveling</li>
+        </ul>
+    <h3>Favorite Food</h3>
+    <p><strong>Top 5:</strong></p>
+    <ol class="food-list">
+        <li>Japanese</li>
+        <li>Mexican</li>
+        <li>Italian</li>
+        <li>Argentinian</li>
+        <li>Spanish</li>
+    </ol>
+
+    <p><strong>Bottom 3:</strong></p>
+    <ol class="food-list">
+        <li>Scottish</li>
+        <li>Thai</li>
+        <li>Russian</li>
+    </ol>
+
+    <ul class="media-list">
+        <li>
+            <img class="category-image" src="images/book.jpg" alt="Books">
+            <strong>Books</strong>
+            <ul>
+                <li>Umineko no Naku Koro ni</li>
+                <li>House of Leaves</li>
+                <li>And Then There Were None</li>
+            </ul>
+        </li>
+        <li>
+            <img class="category-image" src="images/movie.jpg" alt="Movies">
+            <strong>Movies</strong>
+            <ul>
+                <li>The Truman Show</li>
+                <li>Princess Mononoke</li>
+                <li>Groundhog Day</li>
+            </ul>
+        </li>
+        <li>
+            <img class="category-image" src="images/Cptvdisplay.jpg" alt="TV Shows">
+            <strong>TV Shows</strong>
+            <ul>
+                <li>Monster</li>
+                <li>Attack On Titan</li>
+                <li>JJK</li>
+            </ul>
+        </li>
+    </ul>
+
+    </div>
+
+    <hr>
+
+    <div class="section alternate">
+        <h2><a href="destinations.html">My Favorite Spots</a></h2>
+    <ul>
+        <li><a href="destinations.html#spot1">Tokyo</a></li>
+        <li><a href="destinations.html#spot2">New York</a></li>
+        <li><a href="destinations.html#spot3">Reykjavík</a></li>
+        <li><a href="destinations.html#spot4">Rome</a></li>
+        <li><a href="destinations.html#spot5">Takayama</a></li>
+    </ul>
+
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <h2>Favorite Famous People</h2>
+    <div class="people-row">
+        <div class="person-card">
+            <img class="person-image person-center" src="images/toby.jpg" alt="Toby Fox">
+            <div class="person-info">
+                <h3>Toby Fox</h3>
+                <p class="person-title">Video game developer and composer</p>
+                <p><strong>Born:</strong> October 11, 1991</p>
+                <p><strong>Died:</strong> Living</p>
+                <p>Created <em>Undertale</em> and <em>Deltarune</em>, and composed music for several video games. Creative and admirable storyteller, writer, progammer and composer.</p>
+            </div>
+        </div>
+
+        <div class="person-card">
+            <img class="person-image person-center" src="images/diogenes.jpg" alt="Diogenes">
+            <div class="person-info">
+                <h3>Diogenes of Sinope</h3>
+                <p class="person-title">Philosopher</p>
+                <p><strong>Born:</strong> Around 412 BCE</p>
+                <p><strong>Died:</strong> 323 BCE</p>
+                <p>Promoted a simple life independent of wealth and social status and became a well-known representative of Cynic philosophy. I admire his way of living and carefree attitude towards life.</p>
+            </div>
+        </div>
+
+        <div class="person-card ">
+            <img class="person-image person-center" src="images/miyazaki.jpg" alt="Hayao Miyazaki">
+            <div class="person-info">
+                <h3>Hayao Miyazaki</h3>
+                <p class="person-title">Animator, director, screenwriter, and producer</p>
+                <p><strong>Born:</strong> January 5, 1941</p>
+                <p><strong>Died:</strong> Living</p>
+                <p>Co-founded Studio Ghibli and directed <em>Spirited Away</em>, <em>Princess Mononoke</em>, and <em>The Boy and the Heron</em>. Amazing director and animator.</p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <hr>
+
+    <div class="section alternate">
+        <h2>Weekly Schedule</h2>
+    <table id="schedule-table" border="1">
+        <tr><th>Status</th><th>Date</th><th>Start</th><th>End</th><th>Description</th><th>Place</th><th>Type</th><th>Notes</th></tr>
+        <tr><td><img src="images/busy.png" alt="Busy" width="20"></td><td>Monday / Wednesday</td><td>9:00 AM</td><td>3:00 PM</td><td>School</td><td>Universidad Panamericana</td><td>Academic</td><td>Classes and school activities</td></tr>
+        <tr><td><img src="images/free.png" alt="Free" width="20"></td><td>Monday / Wednesday</td><td>3:00 PM</td><td>End of day</td><td>Free time</td><td>Home or other location</td><td>Personal</td><td>Available after school</td></tr>
+        <tr><td><img src="images/busy.png" alt="Busy" width="20"></td><td>Tuesday / Thursday</td><td>9:00 AM</td><td>3:00 PM</td><td>School</td><td>Universidad Panamericana</td><td>Academic</td><td>Morning and afternoon classes</td></tr>
+        <tr><td><img src="images/free.png" alt="Free" width="20"></td><td>Tuesday / Thursday</td><td>3:00 PM</td><td>5:00 PM</td><td>Free time</td><td>Home or nearby</td><td>Personal</td><td>Break between classes</td></tr>
+        <tr><td><img src="images/busy.png" alt="Busy" width="20"></td><td>Tuesday / Thursday</td><td>5:00 PM</td><td>7:00 PM</td><td>School</td><td>Universidad Panamericana</td><td>Academic</td><td>Evening classes</td></tr>
+        <tr><td><img src="images/free.png" alt="Free" width="20"></td><td>Tuesday / Thursday</td><td>7:00 PM</td><td>End of day</td><td>Free time</td><td>Home or other location</td><td>Personal</td><td>Available after school</td></tr>
+        <tr><td><img src="images/free.png" alt="Free" width="20"></td><td>Friday / Saturday / Sunday</td><td>All day</td><td>All day</td><td>Free time</td><td>Any location</td><td>Personal</td><td>Free all day</td></tr>
+    </table>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <h2>Weekly Schedule Form</h2>
+        <form id="schedule-form">
+            <p><label>Date: <input type="date" name="date" required></label></p>
+            <p><label>Time start: <input type="time" name="start" required></label></p>
+            <p><label>Time end: <input type="time" name="end" required></label></p>
+            <p><label>Activity: <input type="text" name="activity" required></label></p>
+            <p><label>Place: <input type="text" name="place" required></label></p>
+            <p>
+                <label for="type">Type:</label>
+                <select id="type" name="type">
+                    <option value="school">School</option>
+                    <option value="personal">Personal</option>
+                    <option value="professional">Professional</option>
+                    <option value="family">Familiar</option>
+                    <option value="other">Other</option>
+                </select>
+            </p>
+            <p><label>Notes:<textarea name="notes" rows="4"></textarea></label></p>
+            <p><label>Flag: <input type="color" name="flag"></label></p>
+            <p class="checkbox-row"><label><input type="checkbox" name="busy"> Busy</label></p>
+            <button type="submit">Add to schedule</button>
+            <p id="schedule-message" role="status"></p>
+        </form>
+    </div>
+
 </body>
 </html>
