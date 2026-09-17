@@ -41,7 +41,7 @@ async function generateTelemetryReport() {
         // ==========================================
         const logEntry = `[${new Date().toISOString()}] PLATFORM: ${platform} | FREEMEM: ${freeMemMB}MB | CPU MODEL: ${cpuModel} | Uptime Hrs: ${uptimeHours} | TOTALMEM: ${totalMem}MB | USEDMEM: ${totalMem - freeMemMB}MB`;
         // TODO: Append logEntry to 'telemetry.log' using fs.appendFile()
-        fs.appendFile('telemetry.log', logEntry + '\n');
+        await fs.appendFile('telemetry.log', logEntry + '\n');
         console.log("Writing log entry to disk...");
 
         console.log("Telemetry audit completed successfully!");
