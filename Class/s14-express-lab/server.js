@@ -43,13 +43,21 @@ app.get('/api/scientist', (req, res) => {
 });
 
 // /api/scientists/:id
-app.get("/api/scientists/:id", (req, res) => {
+app.get("/api/scientists/:id/profile:keyword", (req, res) => {
   const scientistId = parseInt(req.params.id, 10);
   const scientist = scientists.find((scientist) => scientist.id === scientistId);
   if(!scientist) {
     return res.json({ success: false, errorMsg: "No scientist found"});
   }
   else return res.json({success: true, data: scientist});
+
+});
+
+app.post("/api/initiatives", (req, res) => {
+  const {title,budget, department } = req.body;
+  const initiative = {title, budget, department};
+  initiatives.push(initiative);
+  res.json({ title, budget, department })
 
 });
 
