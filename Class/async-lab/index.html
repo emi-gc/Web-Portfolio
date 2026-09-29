@@ -12,7 +12,7 @@
     <div class="container" style="max-width: 650px;">
         <div class="custom-card p-4 mx-auto">
             
-            <!-- Header -->
+            <!-- page header -->
             <header class="text-center mb-4">
                 <span class="badge bg-success mb-2">Lab Task </span>
                 <h1 class="h3 fw-bold text-dark">Cascading Asynchronous Streams</h1>
@@ -21,16 +21,16 @@
                 </p>
             </header>
 
-            <!-- Interactive Selector (Stream 1 Target) -->
+            <!-- javascript enables the dropdown after the scientists load -->
             <div class="mb-4">
                 <label for="scientist-selector" class="form-label fw-semibold">Select Research Director (Stream 1):</label>
-                <select id="scientist-selector" class="form-select">
+                <select id="scientist-selector" class="form-select" disabled>
                     <option value="">-- Fetching Scientist Registry... --</option>
                 </select>
             </div>
 
-            <!-- Telemetry Results Card (Stream 2 Target) -->
-            <div id="results-display" class="border rounded p-4 bg-white text-center">
+            <!-- announce loading messages and results to screen readers -->
+            <div id="results-display" class="border rounded p-4 bg-white text-center" aria-live="polite">
                 <p class="text-muted mb-0">Please select a research director from the registry above.</p>
             </div>
 
