@@ -13,6 +13,15 @@ const scientists = [
     { id: 3, name: "Dr. Aisha Khan", department: "Climate", projects: 7 }
 ];
 
+class WeatherError extends Error {
+  constructor(message, statusCode, rootCauseClass) {
+    super(message);
+    this.name = "WeatherError";
+    this.statusCode = statusCode;
+    this.rootCauseClass = rootCauseClass;
+  }
+}
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 })
@@ -84,8 +93,12 @@ app.get('/greet', (req, res) => {
   res.send(`hello ${name}, how is the weather in ${city}`);
 })
 
-app.post('/about', (req, res) => {
-  res.send('This is still my WebApp Class Project, but secure');
+app.post('/about', (req, res, next) => {
+  next(res.send('This is still my WebApp Class Project, but secure'));
+})
+
+app.get('/about', (req, res, next) => {
+  next(res.send('Second endpoint'));
 })
 
 app.listen(3000, () => {
@@ -100,4 +113,22 @@ app.get("/weatherGDL", async (req, res) => {
 app.get("/weatherLSN", async (req, res) => {
   const respString = await getWeatherFrom(46.52, 6.63, "Lausanne");
   res.send(respString);
+});
+
+const cities = {
+  GDL: {lat: 20.6597, long: -103.349},
+  LSN: {lat: 46.52, long: 6.63},
+};
+
+app.get("/weather/:city", async (req, res) => {
+  const city = req.params;
+  if(!city) next (new Error("City code required"));
+  if(!city[city]) next (new Error("city code invalid"));
+  const { lat, long } = cities[city];
+  const respString = await getWeatherFrom(lat, long, city);
+  res.send(respString);
+});
+
+app.all("*", (req, res) => {
+  next (new Error("Endpoint not found"));
 });
