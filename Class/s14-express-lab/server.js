@@ -1,7 +1,10 @@
 import express from 'express';
-import axios from 'axios';
+// import axios from 'axios';
 import {getWeatherFrom} from './services/meteo-service.js';
 //const express = require('express');
+import weatherRoutes from "./routes/weatherRoutes.js";
+import {WeatherError, errorMiddleware} from "./errors/error-handler.js";
+import { AppError } from '../s17-routing-lab/utils/appError.js';
 
 const app = express();
 app.use(express.json());
@@ -13,14 +16,21 @@ const scientists = [
     { id: 3, name: "Dr. Aisha Khan", department: "Climate", projects: 7 }
 ];
 
-class WeatherError extends Error {
-  constructor(message, statusCode, rootCauseClass) {
-    super(message);
-    this.name = "WeatherError";
-    this.statusCode = statusCode;
-    this.rootCauseClass = rootCauseClass;
+const protect = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || authHeader.startsWith('Bearer ')) {
+    return next(new AppError('Unauthorized: Missing or invalid token header.', 401));
   }
-}
+  const token = authHeader.split(' ')[1];
+  if (token === 'sustain-user-token') {
+    req.user = { id: 101, name: 'Elena (Researcher)', role: 'user'};
+    return next();
+  } else if (token === 'sustain-admin-token') {
+    req.user = { id: 999, name: 'Prof. Gabriel (Admin)', role: 'admin'};
+    return next();
+  }
+};
 
 app.get('/', (req, res) => {
   res.send('Hello World');
@@ -83,27 +93,28 @@ app.post("/api/initiatives", (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-  res.send('This is my WebApp Class Project');
-})
+  req._internalMsg =('This is my WebApp Class Project');
+  next();
+},
+(req, res, next) => {
+  res.send(`Second endpoint. ${req._internalMsg}`);
+});
 
 
 // /greet?name?=****&city=****
 app.get('/greet', (req, res) => {
     const { name, city } = req.query
   res.send(`hello ${name}, how is the weather in ${city}`);
-})
+});
 
-app.post('/about', (req, res, next) => {
+app.post('/about', (req, res) => {
   next(res.send('This is still my WebApp Class Project, but secure'));
-})
-
-app.get('/about', (req, res, next) => {
-  next(res.send('Second endpoint'));
-})
+});
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
-})
+});
+app.use("/api/weather", protect, weatherRoutes);
 
 app.get("/weatherGDL", async (req, res) => {
   const respString = await getWeatherFrom(20.6766, -103.3475, "Guadalajara");
@@ -122,13 +133,27 @@ const cities = {
 
 app.get("/weather/:city", async (req, res) => {
   const city = req.params;
-  if(!city) next (new Error("City code required"));
-  if(!city[city]) next (new Error("city code invalid"));
+  if(!city) 
+    next (new WeatherError("City code required", 400, "/weather/:city"));
+  if(!cities[city]) 
+    next (new WeatherError("city code invalid",  400, "/weather/:city"));
   const { lat, long } = cities[city];
   const respString = await getWeatherFrom(lat, long, city);
   res.send(respString);
 });
 
-app.all("*", (req, res) => {
+app.use((error, req, res, next) => {
+  if (err instanceof WeatherError) {
+    const msg = err.message = err.message || err.rootCauseClass || "Unknown error";
+    res
+    .status(err.statusCode || 500 )
+    .json({error: err.message, rootCause: err.rootCauseClass});
+  }
+  res.status(500).json({error: err.message || "Unknown error"});
+});
+
+app.all("/{*splat}", (req, res, next) => {
   next (new Error("Endpoint not found"));
 });
+
+app.use(errorMiddleware);
