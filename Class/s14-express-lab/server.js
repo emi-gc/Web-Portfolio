@@ -5,9 +5,13 @@ import {getWeatherFrom} from './services/meteo-service.js';
 import weatherRoutes from "./routes/weatherRoutes.js";
 import {WeatherError, errorMiddleware} from "./errors/error-handler.js";
 import { AppError } from '../s17-routing-lab/utils/appError.js';
-
+import { loadEnvFile } from "node:process";
+import {connectDB} from "./config/db.js";
+import mongoose from 'mongoose';
+import { createUser } from "./services/user-service.js";
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const initiatives = [];
 const scientists = [
@@ -15,6 +19,14 @@ const scientists = [
     { id: 2, name: "Prof. Marcus Vance", department: "Oceanography", projects: 2 },
     { id: 3, name: "Dr. Aisha Khan", department: "Climate", projects: 7 }
 ];
+
+loadEnvFile();
+const dbuser = process.env.DB_USER;
+const dbPass = process.env.DB_PASSWORD;
+const dbName = 'test';
+
+const mongoURL = `mongodb+srv://${dbuser}:${dbPass}@cluster0.mgz6yfx.mongodb.net/${dbName}`
+connectDB(mongoURL);
 
 const protect = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -30,6 +42,7 @@ const protect = (req, res, next) => {
     req.user = { id: 999, name: 'Prof. Gabriel (Admin)', role: 'admin'};
     return next();
   }
+  return next(new AppError('Unauthorized: Missing or invalid token header.', 401));
 };
 
 app.get('/', (req, res) => {
@@ -90,6 +103,35 @@ app.post("/api/initiatives", (req, res) => {
   initiatives.push(initiative);
   res.json({ title, budget, department });
 
+});
+
+app.post('/api/users', async (req, res) => {
+  const { username, name, email, password } = req.body || {};
+
+  if ([username, email, password].some(value => typeof value !== 'string' || !value.trim())) {
+    return res.status(400).json({ success: false, message: 'Username, email, and password are required.' });
+  }
+  if (name !== undefined && typeof name !== 'string') {
+    return res.status(400).json({ success: false, message: 'Name must be text.' });
+  }
+
+  try {
+    const user = await createUser({ username, name, email, password });
+    return res.status(201).json({
+      success: true,
+      message: 'User created successfully.',
+      user: { id: user._id, username: user.username, name: user.name, email: user.email },
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({ success: false, message: 'Username already exists.' });
+    }
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ success: false, message: 'Invalid user information.' });
+    }
+    console.error('Failed to create user:', error.message);
+    return res.status(500).json({ success: false, message: 'Unable to create user. Please try again.' });
+  }
 });
 
 app.get('/about', (req, res) => {
