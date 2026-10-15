@@ -15,11 +15,7 @@ const dbuser = process.env.DB_USER;
 const dbPass = process.env.DB_PASSWORD;
 const dbName = 'test';
 
-const mongoURL = process.env.MONGODB_URL || (
-    dbuser && dbPass
-        ? `mongodb+srv://${encodeURIComponent(dbuser)}:${encodeURIComponent(dbPass)}@cluster0.mgz6yfx.mongodb.net/${dbName}`
-        : undefined
-);
+const mongoURL = `mongodb+srv://${dbuser}:${dbPass}@cluster0.mgz6yfx.mongodb.net/${dbName}`;
 await connectDB(mongoURL);
 
 // Body parser
