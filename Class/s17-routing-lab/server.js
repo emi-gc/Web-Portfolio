@@ -5,7 +5,7 @@ import { errorMiddleware } from './middleware/errorMiddleware.js';
 import { AppError } from './utils/appError.js';
 import { loadEnvFile } from "node:process";
 import {connectDB} from "./config/db.js";
-import {createUser} from "./services/user-service.js";
+import {createUser, findUser, findUsers} from "./services/user-service.js";
 const app = express();
 const PORT = 3000;
 
@@ -28,13 +28,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/initiatives', apiRoutes);
 
 app.post('/api/users', async (req, res, next) => {
-    try {
-        const { username, name, email, password } = req.body || {};
-        await createUser({ username, name, email, password });
-        res.status(201).json({ message: 'User created successfully.' });
-    } catch (error) {
-        next(error);
-    }
+        const { username, name, email, password } = req.body;
+        if(!username || !email || !password) return res.status(400).json({message: "All fields are required!"});
+        createUser({ username, name, email, password}).then((user) => res.json(user)).catch((err) => next(err));
 });
 
 // 404 Unhandled Route Handler
