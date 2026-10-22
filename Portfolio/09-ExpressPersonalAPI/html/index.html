@@ -9,16 +9,65 @@
 </head>
 
 <body>
-    <% if (locals.error) { %>
-        <h3>
-            <%= error %>
-        </h3>
+    <!-- shows an error sent by the server. -->
+    <% if (error) { %>
+        <h3><%= error %></h3>
+    <% } %>
+
+    <!-- sends the name to the get route. -->
+    <form action="/greet" method="get">
+        <label for="name">Register:</label>
+        <input type="text" name="name" id="name" placeholder="Name">
+        <input type="submit" value="go next">
+    </form>
+
+    <!-- greets every registered name and links to its greeting page. -->
+    <ul>
+        <% for (let i = 0; i < names.length; i++) { %>
+            <li>Hello <a href="/greet/<%= i %>" onclick="showGreeting(event, <%= i %>)"><%= names[i] %></a>!</li>
         <% } %>
-            <form action="/greet" method="get">
-                Register:
-                <input type="text" name="name" id="name" placeholder="Name">
-                <input type="submit" value="go next">
-            </form>
+    </ul>
+
+    <!-- sends a new task to the post route. -->
+    <h2>TODO List</h2>
+    <form action="/task" method="post">
+        <label for="task">New task:</label>
+        <input type="text" name="task" id="task">
+        <button type="submit">Add task</button>
+    </form>
+
+    <!-- shows every task with controls to reorder or delete it. -->
+    <ol>
+        <% for (let i = 0; i < tasks.length; i++) { %>
+            <li>
+                <%= tasks[i] %>
+                <form action="/task/order" method="post">
+                    <input type="hidden" name="index" value="<%= i %>">
+                    <!-- moves one position up or down. -->
+                    <button name="move" value="-1">↑</button>
+                    <button name="move" value="1">↓</button>
+                </form>
+                <button type="button" onclick="deleteTask(<%= i %>)">Delete</button>
+            </li>
+        <% } %>
+    </ol>
+
+    <script>
+        // shows the greeting page without changing the address bar.
+        async function showGreeting(event, index) {
+            event.preventDefault();
+            const response = await fetch("/greet/" + index);
+            document.documentElement.innerHTML = await response.text();
+        }
+
+        // sends a delete request because html forms only support get and post.
+        async function deleteTask(index) {
+            await fetch("/task?index=" + index, { method: "DELETE" });
+
+            // returns to the home page after deleting the task.
+            window.location.href = "/";
+        }
+    </script>
 
 </body>
 
