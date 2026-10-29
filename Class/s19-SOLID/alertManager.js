@@ -22,8 +22,6 @@ export class AlertManager {
                 console.log(`Sending SMS to ${recipient}: ${formattedMessage}`);
             } else if (channelType === 'SLACK') {
                 console.log(`Posting to Slack channel ${recipient}: ${formattedMessage}`);
-            } else if (channelType === 'WHATSAPP') {
-                console.log(`Posting to WHATSAPP channel ${recipient}: ${formattedMessage}`);
             } else {
                 throw new Error("Unsupported channel type!");
             }
